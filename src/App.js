@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Dropdown from "react-dropdown";
 import parse from "html-react-parser";
-import { fetchShow } from "./api/fetchShow";
 
 import { formatSeasons } from "./utils/formatSeasons";
-
+import fetchShow from './api/fetchShow'
 import Episodes from "./components/Episodes";
 import "./styles.css";
 
@@ -16,11 +14,13 @@ export default function App() {
   const episodes = seasons[selectedSeason] || [];
 
   useEffect(() => {
-    console.log(fetchShow())
-      /* .then(res => {
-       *   setShow(res.data);
-       *   setSeasons(formatSeasons(res.data._embedded.episodes));
-       * }); */
+    fetchShow()
+        .then(res => {
+          setShow(res.data);
+          setSeasons(formatSeasons(res.data._embedded.episodes));
+        });
+    
+    
   }, []);
 
   const handleSelect = e => {
